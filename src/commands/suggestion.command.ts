@@ -111,7 +111,8 @@ export default new Command({
                         "forwarded",
                         "in-progress",
                         "information",
-                        "invalid"
+                        "invalid",
+                        "open"
                     ]
                 },
                 {
@@ -459,7 +460,7 @@ export default new Command({
             if (thread?.locked && !thread?.archived) await thread.setLocked(false)
 
             const CLOSE_STATUS = ["approved", "denied", "duplicate", "invalid"]
-            const OPEN_STATUS = ["forwarded", "in-progress", "information"]
+            const OPEN_STATUS = ["open", "forwarded", "in-progress", "information"]
             if (
                 // prettier-ignore
                 thread && (( // thread must stay outside parentheses
