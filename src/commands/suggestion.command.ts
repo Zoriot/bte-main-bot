@@ -119,6 +119,13 @@ export default new Command({
                     description: "Suggestion status reason.",
                     required: false,
                     optionType: "STRING"
+                },
+                {
+                    name: "silent",
+                    description:
+                        "Don't notify the suggestion creator about the status change.",
+                    required: false,
+                    optionType: "BOOLEAN"
                 }
             ]
         },
@@ -443,6 +450,7 @@ export default new Command({
             const oldStatus = suggestion.status
             const status = args.consume("status").toLowerCase()
             const reason = args.consumeRest(["reason"])
+            const silent = args.consumeBoolean("silent")
             if (!(status in suggestionStatusActions)) {
                 const formatted = humanizeArray(Object.keys(suggestionStatusActions))
                 return message.sendErrorMessage("specifyNewStatus", formatted)
@@ -490,7 +498,7 @@ export default new Command({
                 const author: User | null = await client.users
                     .fetch(suggestion.author, { force: true })
                     .catch(noop)
-                if (author) {
+                if (author && !silent) {
                     const dms = (await author.createDM()) as DMChannel
                     const updater = `<@${suggestion.statusUpdater}>`
                     // marked as something -> marked your suggestion as something
