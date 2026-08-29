@@ -21,7 +21,8 @@ export enum SuggestionStatuses {
     "forwarded",
     "in-progress",
     "information",
-    "invalid"
+    "invalid",
+    "open"
 }
 
 export interface Identifier {
